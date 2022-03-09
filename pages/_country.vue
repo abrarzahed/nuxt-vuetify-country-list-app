@@ -129,7 +129,7 @@
     <!-- fetch another country with same first letter -->
 
     <div v-if="!$fetchState.pending && matchedCountries.length" class="mt-16">
-      <h5 class="mb-8 text-h4 font-weight-medium">
+      <h5 class="mb-8 text-h5 font-weight-bold">
         Countries that start with "{{ firstLatter }}"
       </h5>
 

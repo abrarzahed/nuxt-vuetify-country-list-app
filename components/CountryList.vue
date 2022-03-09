@@ -167,7 +167,7 @@ export default {
       border: 1px solid #ddd;
       border-radius: var(--border-radius);
       order: -1;
-      height: 140px;
+      height: 160px;
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
