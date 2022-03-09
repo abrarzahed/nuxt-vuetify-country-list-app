@@ -16,10 +16,10 @@ export const mutations = {
 };
 export const actions = {
   async getCountries(context) {
-    console.log(`fetching data in store`);
+    // console.log(`fetching data in store`);
 
     const res = await fetch("https://restcountries.com/v2/all");
-    console.log(`res`, res);
+    // console.log(`res`, res);
 
     const countries = await res.json();
     // console.log(countries);
@@ -29,7 +29,7 @@ export const actions = {
     context.commit("SET_SEARCH_TERM", searchTerm);
   },
   setListType(context, type) {
-    console.log(`store list type`, type);
+    // console.log(`store list type`, type);
 
     context.commit("SET_LEST_TYPE", type);
   },
