@@ -1,13 +1,15 @@
 <template>
   <div>
     <div class="single-country-wrapper">
-      <h2 v-if="$fetchState.pending">single country Loading....</h2>
+      <div v-if="$fetchState.pending">
+        <SingleCountryLoader />
+      </div>
       <div class="single-country" v-if="!$fetchState.pending && countryData">
         <div
           :style="{ backgroundImage: `url('${countryData.flags.svg}')` }"
           class="single-country__flag m-0"
         ></div>
-        <v-col class="single-country__content">
+        <div class="single-country__content">
           <h4 class="text-h4 font-weight-medium">
             {{ countryData.name }} <br />
             <span
@@ -26,83 +28,111 @@
               }}</v-icon
             >
           </h4>
-          <div class="data">
-            <p>
-              <v-icon>mdi-web</v-icon> Region:
-              <strong> {{ countryData.region }}</strong>
-            </p>
-            <p>
-              <v-icon>mdi-dots-hexagon</v-icon> Subregion:
-              <strong> {{ countryData.subregion }}</strong>
-            </p>
-            <p>
-              <v-icon>mdi-dots-hexagon</v-icon> Capital:
-              <strong> {{ countryData.capital }}</strong>
-            </p>
-            <p v-if="countryData.topLevelDomain">
-              <v-icon>mdi-web</v-icon> Top label domain:
-              <strong> {{ countryData.topLevelDomain[0] }}</strong>
-            </p>
-            <p>
-              <v-icon>mdi-dots-hexagon</v-icon> Alpha code:
-              <strong>
-                {{ countryData.alpha2Code }},
-                {{ countryData.alpha3Code }}</strong
-              >
-            </p>
-            <p v-if="countryData.callingCodes">
-              <v-icon>mdi-phone</v-icon> Phone code:
-              <strong> {{ countryData.callingCodes[0] }}</strong>
-            </p>
-            <p>
-              <v-icon>mdi-account-group</v-icon> Population:
-              <strong> {{ countryData.population }}</strong>
-            </p>
-            <p>
-              <v-icon>mdi-map-marker-path</v-icon> Area:
-              <strong> {{ countryData.area }}</strong>
-            </p>
-            <p v-if="countryData.timezones">
-              <v-icon>mdi-clock-outline</v-icon> Timezone:
-              <strong> {{ countryData.timezones[0] }}</strong>
-            </p>
-            <p>
-              <v-icon>mdi-dots-hexagon</v-icon> Borders:
-              <strong v-for="(border, i) in countryData.borders" :key="i">
-                {{ border }},</strong
-              >
-            </p>
-            <p>
-              <v-icon>mdi-dots-hexagon</v-icon> Native name:
-              <strong> {{ countryData.nativeName }}</strong>
-            </p>
-            <p>
-              <v-icon>mdi-dots-hexagon</v-icon> Numeric code:
-              <strong> {{ countryData.numericCode }}</strong>
-            </p>
-            <p v-for="(currency, i) in countryData.currencies" :key="i">
-              <v-icon>mdi-cash</v-icon> Currencies: { <br />
-              Code: <strong> {{ currency.code }}</strong
-              ><br />
-              Name: <strong> {{ currency.name }}</strong
-              ><br />
-              Symbol: <strong> {{ currency.symbol }}</strong
-              ><br />}
-            </p>
-            <p v-if="countryData.regionalBlocs">
-              <v-icon>mdi-dots-hexagon</v-icon> Regional Block:
-              <strong> {{ countryData.regionalBlocs[0].name }}</strong>
-            </p>
-          </div>
-          <!-- <p>{{ countryData }}</p> -->
-        </v-col>
+          <v-row dense>
+            <!-- First column -->
+            <v-col cols="12" md="3" class="pa-2 pa-md-5">
+              <p>
+                <v-icon>mdi-web</v-icon> Region:
+                <strong> {{ countryData.region }}</strong>
+              </p>
+              <p>
+                <v-icon>mdi-dots-hexagon</v-icon> Subregion:
+                <strong> {{ countryData.subregion }}</strong>
+              </p>
+              <p>
+                <v-icon>mdi-dots-hexagon</v-icon> Capital:
+                <strong> {{ countryData.capital }}</strong>
+              </p>
+              <p v-if="countryData.topLevelDomain">
+                <v-icon>mdi-web</v-icon> Top label domain:
+                <strong> {{ countryData.topLevelDomain[0] }}</strong>
+              </p>
+            </v-col>
+
+            <!-- Second column -->
+            <v-col cols="12" md="3" class="pa-2 pa-md-5">
+              <p>
+                <v-icon>mdi-dots-hexagon</v-icon> Alpha code:
+                <strong>
+                  {{ countryData.alpha2Code }},
+                  {{ countryData.alpha3Code }}</strong
+                >
+              </p>
+              <p v-if="countryData.callingCodes">
+                <v-icon>mdi-phone</v-icon> Phone code:
+                <strong> {{ countryData.callingCodes[0] }}</strong>
+              </p>
+              <p>
+                <v-icon>mdi-account-group</v-icon> Population:
+                <strong>
+                  {{
+                    String(countryData.population).replace(
+                      /(.)(?=(\d{3})+$)/g,
+                      "$1,"
+                    )
+                  }}</strong
+                >
+              </p>
+              <p>
+                <v-icon>mdi-map-marker-path</v-icon> Area:
+                <strong>
+                  {{
+                    String(countryData.area).replace(/(.)(?=(\d{3})+$)/g, "$1,")
+                  }}</strong
+                >
+              </p>
+            </v-col>
+
+            <!-- Third column -->
+            <v-col cols="12" md="3" class="pa-2 pa-md-5">
+              <p v-if="countryData.timezones">
+                <v-icon>mdi-clock-outline</v-icon> Timezone:
+                <strong> {{ countryData.timezones[0] }}</strong>
+              </p>
+              <p>
+                <v-icon>mdi-dots-hexagon</v-icon> Borders:
+                <strong v-for="(border, i) in countryData.borders" :key="i">
+                  {{ border }},</strong
+                >
+              </p>
+              <p>
+                <v-icon>mdi-dots-hexagon</v-icon> Native name:
+                <strong> {{ countryData.nativeName }}</strong>
+              </p>
+              <p>
+                <v-icon>mdi-dots-hexagon</v-icon> Numeric code:
+                <strong> {{ countryData.numericCode }}</strong>
+              </p>
+            </v-col>
+
+            <!-- Fourth column -->
+            <v-col cols="12" md="3" class="pa-2 pa-md-5">
+              <p v-for="(currency, i) in countryData.currencies" :key="i">
+                <v-icon>mdi-cash</v-icon> Currencies: { <br />
+                Code: <strong> {{ currency.code }}</strong
+                ><br />
+                Name: <strong> {{ currency.name }}</strong
+                ><br />
+                Symbol: <strong> {{ currency.symbol }}</strong
+                ><br />}
+              </p>
+              <p v-if="countryData.regionalBlocs">
+                <v-icon>mdi-dots-hexagon</v-icon> Regional Block:
+                <strong> {{ countryData.regionalBlocs[0].name }}</strong>
+              </p>
+            </v-col>
+          </v-row>
+        </div>
       </div>
     </div>
 
     <!-- fetch another country with same first letter -->
 
-    <div v-if="!$fetchState.pending" class="mt-10">
-      <h2 class="mb-5">Countries that start with "{{ firstLatter }}"</h2>
+    <div v-if="!$fetchState.pending" class="mt-16">
+      <h5 class="mb-8 text-h4 font-weight-medium">
+        Countries that start with "{{ firstLatter }}"
+      </h5>
+
       <div class="country" v-if="getListType == 'search'">
         <div
           v-for="(item, i) in matchedCountries"
@@ -126,7 +156,9 @@
           </div>
         </div>
       </div>
-      <h2 v-if="!allCountries.length">Loading....</h2>
+      <div v-if="!allCountries.length">
+        <CountryListLoader />
+      </div>
     </div>
   </div>
 </template>
@@ -161,7 +193,9 @@ export default {
     ...mapGetters("country", ["allCountries", "getListType"]),
     matchedCountries() {
       return this.allCountries.filter(
-        (item) => item.name[0] == this.firstLatter
+        (item) =>
+          item.name[0] == this.firstLatter &&
+          item.name !== this.countryData.name
       );
     },
   },
@@ -177,36 +211,25 @@ export default {
 <style lang="scss">
 .single-country-wrapper {
   .single-country {
-    // align-items: stretch;
-    // display: flex;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.05);
     &__flag {
-      border-top-left-radius: 8px;
-      border-bottom-left-radius: 8px;
-      border-radius: 8px;
+      box-shadow: -2px 0px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
       min-height: 500px;
-      // height: 100%;
       background-size: cover;
-      background-position: center;
+      background-position: center center;
       background-repeat: no-repeat;
-      flex-basis: 70%;
-      // border-top-right-radius: 20px;
-      border-right: 2px solid #eee;
+      @media (max-width: 768px) {
+        min-height: 300px;
+      }
     }
     &__content {
       border-top-right-radius: 8px;
       border-bottom-right-radius: 8px;
-      flex-basis: 40%;
       padding: 30px;
       display: grid;
       gap: 10px;
-      .data {
-        display: grid;
-        gap: 6px;
-        p {
-          margin: 0;
-        }
-      }
     }
   }
 }

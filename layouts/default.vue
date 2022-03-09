@@ -45,9 +45,44 @@
         <Nuxt />
       </v-container>
     </v-main>
-
-    <v-footer>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+    <!-- <Popup :showPopup="showPopup" @closePopup="showPopup = false" /> -->
+    <v-footer dark color="#2c2c54" class="pa-5">
+      <v-container>
+        <v-row dense align="center" class="footer-main">
+          <v-col cols="12" md="3">
+            <a
+              href="https://wa.me/+8801887877854"
+              class="whatsapp"
+              target="_blank"
+            >
+              <span><v-icon left>mdi-whatsapp</v-icon>+8801887877854</span>
+            </a>
+          </v-col>
+          <v-col cols="12" md="3">
+            <a href="mailto:abrarzahed6986@gmail.com">
+              <span
+                ><v-icon left>mdi-email</v-icon>abrarzahed6986@gmail.com</span
+              >
+            </a>
+          </v-col>
+          <v-col cols="12" md="3">
+            <a href="https://abrar-zahed.netlify.app/" target="_blank">
+              <span
+                ><v-icon left>mdi-web</v-icon
+                >https://abrar-zahed.netlify.app</span
+              >
+            </a>
+          </v-col>
+          <v-col cols="12" md="3">
+            <a
+              class="font-weight-bold white--text"
+              href="https://restcountries.com/"
+            >
+              <span> <v-icon left>mdi-web</v-icon>Rest Countries API</span></a
+            >
+          </v-col>
+        </v-row>
+      </v-container>
     </v-footer>
   </v-app>
 </template>
@@ -60,6 +95,7 @@ export default {
     return {
       searchTerm: "",
       listType: "count",
+      showPopup: false,
     };
   },
 
@@ -84,11 +120,24 @@ export default {
       this.setListType("count");
     },
   },
-  mounted() {},
+  mounted() {
+    setTimeout(() => {
+      this.showPopup = true;
+    }, 4000);
+  },
 };
 </script>
 
 <style lang="scss">
+.footer-main {
+  a {
+    text-decoration: none;
+    font-weight: 500;
+    span {
+      color: #fff;
+    }
+  }
+}
 .v-sheet.v-app-bar.v-toolbar:not(.v-sheet--outlined) {
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1) !important;
 }

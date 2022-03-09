@@ -1,9 +1,8 @@
 <template>
   <div>
-    <v-row dense>
-      <!-- <v-col cols="12" md="3" v-for=""></v-col> -->
-    </v-row>
-    <h2 v-if="!allCountries.length">Loading....</h2>
+    <div v-if="!allCountries.length">
+      <CountryListLoader />
+    </div>
     <div class="country" v-if="getListType == 'count'">
       <div
         v-for="(item, i) in countedCountries"
@@ -52,7 +51,7 @@
     </div>
     <div
       v-if="allCountries.length && getListType == 'count'"
-      class="btn-group d-flex my-10 justify-center"
+      class="btn-group d-flex mt-10 justify-center"
     >
       <v-btn
         v-if="countedCountries.length < 250"
@@ -71,6 +70,7 @@
         tile
         depressed
         large
+        color="info"
         >Show Less</v-btn
       >
     </div>
@@ -120,12 +120,14 @@ export default {
   justify-content: center;
   align-items: stretch;
   .card {
-    --background: #ddd;
+    --background: rgba(22, 22, 150, 0.2);
+    --background: #fff;
     --border-radius: 0.8rem;
     display: flex;
     flex-direction: column;
     position: relative;
     cursor: pointer;
+
     &.dark {
       --background: #444;
     }
@@ -142,6 +144,8 @@ export default {
       z-index: -1;
       transition: all ease 0.2s;
       transition-property: width, height, bottom;
+      box-shadow: 10px 10px 30px 10px rgba(0, 0, 0, 0.05),
+        -10px -10px 30px 10px rgba(0, 0, 0, 0.05);
     }
     &:hover::after {
       width: calc(100% + 1rem);
