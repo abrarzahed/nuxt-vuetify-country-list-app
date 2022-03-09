@@ -6,8 +6,8 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: "%s - nuxt-country-list-app",
-    title: "nuxt-country-list-app",
+    // titleTemplate: "%s",
+    title: "Nuxtjs || World",
     htmlAttrs: {
       lang: "en",
     },
